@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w_o)7-3w+oqlg62@=9#wlq%+#_1p(lsai9p&m#11gw86(!c^r^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # تعيين DEBUG إلى False للإنتاج
 
-ALLOWED_HOSTS = ['*']  # يمكنك تحديد المضيفات المسموح بها هنا
+ALLOWED_HOSTS = ['nessta.pythonanywhere.com', 'localhost', '127.0.0.1']  # إضافة نطاق PythonAnywhere
 
 # Application definition
 
@@ -37,18 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'management',  # تطبيقك الرئيسي
-    'debug_toolbar',  # إضافة Django Debug Toolbar
+    'debug_toolbar',  # إضافة Django Debug Toolbar (يمكن إزالته في الإنتاج)
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # إضافة WhiteNoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',  # إضافة Debug Toolbar Middleware
+    'debug_toolbar.middleware.DebugToolbarMiddleware',  # إضافة Debug Toolbar Middleware (يمكن إزالته في الإنتاج)
 ]
 
 ROOT_URLCONF = 'ac1_management.urls'
@@ -117,6 +118,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # مسار الملفات الثابتة المجمعة
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # مسار الملفات الثابتة
 
 # Media files (الملفات التي يرفعها المستخدمون)
@@ -129,13 +131,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # إعدادات الأمان (للاستخدام في الإنتاج)
-if not DEBUG:
-    SECURE_HSTS_SECONDS = 31536000  # 1 year
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
 
 # إعدادات البريد الإلكتروني (للاستخدام في الإنتاج)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -166,85 +170,35 @@ if DEBUG:
     # إضافة Django Debug Toolbar للتطوير
     INTERNAL_IPS = ['127.0.0.1']
 
-# إعدادات لتحسين الأداء في الإنتاج
-if not DEBUG:
-    # استخدام WhiteNoise لتقديم الملفات الثابتة
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# إعدادات WhiteNoise لتقديم الملفات الثابتة
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# إعدادات لتحسين الأمان
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-
-# إعدادات لتحسين تجربة المستخدم
-MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-
-# إعدادات لتحسين الأداء في الإنتاج
-if not DEBUG:
-    # استخدام قاعدة بيانات PostgreSQL في الإنتاج
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'your-db-name',
-            'USER': 'your-db-user',
-            'PASSWORD': 'your-db-password',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
-    }
-
-    # استخدام Redis للتخزين المؤقت
-    CACHES = {
-        'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': 'redis://127.0.0.1:6379/1',
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            }
-        }
-    }
-
-    # إعدادات لتسجيل الأخطاء
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'file': {
-                'level': 'ERROR',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, 'logs/django_errors.log'),
-            },
+# إعدادات تسجيل الأخطاء
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/django_errors.log'),
         },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'ERROR',
-                'propagate': True,
-            },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
         },
-    }
+    },
+}
 
-# إعدادات المصادقة المخصصة
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # المصادقة الافتراضية
-]
-
-# إعدادات نموذج المستخدم المخصص
-AUTH_USER_MODEL = 'management.CustomUser'  # استبدل بمسار نموذج المستخدم المخصص إذا كنت تستخدم واحدًا
+# إعدادات نموذج المستخدم المخصص (إذا كنت تستخدم واحدًا)
+AUTH_USER_MODEL = 'management.CustomUser'  # استبدل بمسار نموذج المستخدم المخصص
 
 # إعدادات الجلسات
 SESSION_COOKIE_AGE = 1209600  # عمر الجلسة (أسبوعين)
 SESSION_SAVE_EVERY_REQUEST = True  # حفظ الجلسة في كل طلب
-
-# إعدادات ملفات الوسائط
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# إعدادات ملفات الثابتة
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # إعدادات الرسائل
 from django.contrib.messages import constants as message_constants
