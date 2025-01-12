@@ -1,0 +1,26 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<h2>قائمة العملاء</h2>
+<a href="{% url 'add_customer' %}" class="btn btn-primary mb-3">إضافة عميل جديد</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>اسم العميل</th>
+            <th>الهاتف</th>
+            <th>البريد الإلكتروني</th>
+            <th>العنوان</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.address }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

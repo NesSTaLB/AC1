@@ -1,0 +1,26 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<h2>قائمة الفنيين</h2>
+<a href="{% url 'add_technician' %}" class="btn btn-primary mb-3">إضافة فني جديد</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>اسم الفني</th>
+            <th>التخصص</th>
+            <th>الهاتف</th>
+            <th>البريد الإلكتروني</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for technician in technicians %}
+        <tr>
+            <td>{{ technician.user.username }}</td>  <!-- عرض اسم الفني من CustomUser -->
+            <td>{{ technician.specialty }}</td>  <!-- عرض التخصص -->
+            <td>{{ technician.phone }}</td>  <!-- عرض الهاتف -->
+            <td>{{ technician.email }}</td>  <!-- عرض البريد الإلكتروني -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<h2>قائمة مهام الصيانة</h2>
+<a href="{% url 'add_maintenance_task' %}" class="btn btn-primary mb-3">إضافة مهمة صيانة جديدة</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>المهمة</th>
+            <th>المشروع</th>
+            <th>الفني</th>
+            <th>حالة المهمة</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in maintenance_tasks %}
+        <tr>
+            <td>{{ task.task }}</td>
+            <td>{{ task.project.name }}</td>
+            <td>{{ task.technician.user.username }}</td>  <!-- عرض اسم الفني -->
+            <td>{{ task.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

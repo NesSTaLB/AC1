@@ -1,0 +1,34 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4 mb-4">تفاصيل المشروع: {{ project.name }}</h2>
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            معلومات المشروع
+        </div>
+        <div class="card-body">
+            <p><strong>الوصف:</strong> {{ project.description }}</p>
+            <p><strong>تاريخ البدء:</strong> {{ project.start_date }}</p>
+            <p><strong>تاريخ الانتهاء:</strong> {{ project.end_date }}</p>
+            <p><strong>حالة المشروع:</strong> {{ project.status }}</p>
+
+            <!-- عرض صورة المشروع إذا كانت موجودة -->
+            {% if project.project_image %}
+                <p><strong>صورة المشروع:</strong></p>
+                <img src="{{ project.project_image.url }}" alt="صورة المشروع" class="img-fluid" style="max-width: 100%; height: auto;">
+            {% else %}
+                <p><strong>صورة المشروع:</strong> لا توجد صورة مرفقة.</p>
+            {% endif %}
+
+            <!-- عرض ملف المشروع إذا كان موجودًا -->
+            {% if project.project_file %}
+                <p><strong>ملف المشروع:</strong> <a href="{{ project.project_file.url }}" target="_blank">تحميل الملف</a></p>
+            {% else %}
+                <p><strong>ملف المشروع:</strong> لا يوجد ملف مرفق.</p>
+            {% endif %}
+        </div>
+    </div>
+    <a href="{% url 'project_list' %}" class="btn btn-secondary mt-3">عودة إلى القائمة</a>
+</div>
+{% endblock %}

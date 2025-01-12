@@ -1,0 +1,37 @@
+{% extends 'management/base.html' %}
+
+{% block title %}قائمة جداول الصيانة{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">قائمة جداول الصيانة</h1>
+<a href="{% url 'add_maintenance_schedule' %}" class="btn btn-primary mb-3">إضافة جدول صيانة جديد</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>المهمة</th>
+            <th>المشروع</th>
+            <th>الفني</th>
+            <th>تاريخ البدء</th>
+            <th>تاريخ الانتهاء</th>
+            <th>التكرار</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{ schedule.task }}</td>
+            <td>{{ schedule.project.name }}</td>
+            <td>{{ schedule.technician.name }}</td>
+            <td>{{ schedule.start_date }}</td>
+            <td>{{ schedule.end_date }}</td>
+            <td>{{ schedule.get_frequency_display }}</td>
+            <td>
+                <a href="{% url 'edit_maintenance_schedule' schedule.id %}" class="btn btn-sm btn-warning">تعديل</a>
+                <a href="{% url 'delete_maintenance_schedule' schedule.id %}" class="btn btn-sm btn-danger">حذف</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

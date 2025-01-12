@@ -1,0 +1,34 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<h2>قائمة المشاريع</h2>
+<a href="{% url 'add_project' %}" class="btn btn-primary mb-3">إضافة مشروع جديد</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>اسم المشروع</th>
+            <th>العميل</th>
+            <th>المهندس</th>
+            <th>الفني</th>
+            <th>حالة المشروع</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>{{ project.name }}</td>  <!-- عرض اسم المشروع -->
+            <td>{{ project.customer.name }}</td>  <!-- عرض اسم العميل -->
+            <td>{{ project.engineer.user.username }}</td>  <!-- عرض اسم المهندس -->
+            <td>{{ project.technician.user.username }}</td>  <!-- عرض اسم الفني -->
+            <td>{{ project.status }}</td>  <!-- عرض حالة المشروع -->
+            <td>
+                <a href="{% url 'project_detail' project.id %}" class="btn btn-info btn-sm">تفاصيل</a>
+                <a href="{% url 'edit_project' project.id %}" class="btn btn-warning btn-sm">تعديل</a>
+                <a href="{% url 'delete_project' project.id %}" class="btn btn-danger btn-sm">حذف</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

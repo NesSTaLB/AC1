@@ -1,0 +1,35 @@
+{% extends 'management/base.html' %}
+
+{% block title %}قائمة الموارد{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">قائمة الموارد</h1>
+<a href="{% url 'add_resource' %}" class="btn btn-primary mb-3">إضافة مورد جديد</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>اسم المورد</th>
+            <th>الوصف</th>
+            <th>الكمية</th>
+            <th>المشروع</th>
+            <th>المهمة</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for resource in resources %}
+        <tr>
+            <td>{{ resource.name }}</td>
+            <td>{{ resource.description }}</td>
+            <td>{{ resource.quantity }}</td>
+            <td>{{ resource.project.name }}</td>
+            <td>{{ resource.task.task }}</td>
+            <td>
+                <a href="{% url 'edit_resource' resource.id %}" class="btn btn-sm btn-warning">تعديل</a>
+                <a href="{% url 'delete_resource' resource.id %}" class="btn btn-sm btn-danger">حذف</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

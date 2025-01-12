@@ -1,0 +1,11 @@
+<!-- management/templates/management/edit_project.html -->
+{% extends 'management/base.html' %}
+
+{% block content %}
+<h2>تعديل المشروع</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+</form>
+{% endblock %}

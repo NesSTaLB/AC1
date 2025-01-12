@@ -1,0 +1,69 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">إنشاء تقرير جديد</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- حقول ReportForm -->
+        <div class="form-group">
+            <label for="id_name">اسم التقرير:</label>
+            {{ form.name }}
+        </div>
+        
+        <!-- حقول الفلاتر -->
+        <div class="form-group">
+            <label for="start_date">تاريخ البدء:</label>
+            <input type="date" id="start_date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="end_date">تاريخ الانتهاء:</label>
+            <input type="date" id="end_date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="status">حالة المشروع:</label>
+            <select id="status" class="form-control">
+                <option value="all">الكل</option>
+                <option value="active">نشط</option>
+                <option value="completed">مكتمل</option>
+            </select>
+        </div>
+
+        <!-- حقول ExportColumnsForm -->
+        <div class="form-group">
+            <label>اختر الأعمدة للتصدير:</label>
+            {% for column in columns_form.columns %}
+                <div class="form-check">
+                    {{ column }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- حقل filters المخفي -->
+        <input type="hidden" id="id_filters" name="filters">
+
+        <!-- زر الإرسال -->
+        <button type="submit" class="btn btn-primary">إنشاء التقرير</button>
+    </form>
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        
+        // جمع بيانات الفلاتر
+        const filters = {
+            start_date: document.getElementById('start_date').value,
+            end_date: document.getElementById('end_date').value,
+            status: document.getElementById('status').value,
+        };
+        
+        // تحويل الفلاتر إلى JSON وإضافتها إلى الحقل المخفي
+        document.getElementById('id_filters').value = JSON.stringify(filters);
+        
+        // إرسال النموذج
+        this.submit();
+    });
+</script>
+{% endblock %}

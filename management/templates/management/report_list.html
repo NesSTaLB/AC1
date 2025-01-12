@@ -1,0 +1,32 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">قائمة التقارير</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>اسم التقرير</th>
+                <th>تم الإنشاء بواسطة</th>
+                <th>تاريخ الإنشاء</th>
+                <th>صيغة التصدير</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.name }}</td>
+                <td>{{ report.created_by.username }}</td>
+                <td>{{ report.created_at }}</td>
+                <td>{{ report.get_export_format_display }}</td>
+                <td>
+                    <a href="{% url 'report_detail' report.id %}" class="btn btn-primary">عرض التفاصيل</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'create_report' %}" class="btn btn-success">إنشاء تقرير جديد</a>
+</div>
+{% endblock %}

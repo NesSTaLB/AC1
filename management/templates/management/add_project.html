@@ -1,0 +1,100 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4 mb-4">إضافة مشروع جديد</h2>
+    <form method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        
+        <!-- معلومات أساسية عن المشروع -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                معلومات أساسية
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">اسم المشروع:</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">وصف المشروع:</label>
+                    {{ form.description }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.start_date.id_for_label }}">تاريخ البدء:</label>
+                    {{ form.start_date }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.end_date.id_for_label }}">تاريخ الانتهاء:</label>
+                    {{ form.end_date }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.customer.id_for_label }}">العميل:</label>
+                    {{ form.customer }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.engineer.id_for_label }}">مهندس المشروع:</label>
+                    {{ form.engineer }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.technician.id_for_label }}">الفني:</label>
+                    {{ form.technician }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.status.id_for_label }}">حالة المشروع:</label>
+                    {{ form.status }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.project_image.id_for_label }}">صورة المشروع:</label>
+                    {{ form.project_image }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.project_file.id_for_label }}">ملف المشروع:</label>
+                    {{ form.project_file }}
+                </div>
+            </div>
+        </div>
+
+        <!-- حالات مراحل المشروع -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">
+                حالات مراحل المشروع
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="{{ form.foundation_status.id_for_label }}">حالة التأسيس:</label>
+                    {{ form.foundation_status }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.extension_status.id_for_label }}">حالة التمديد:</label>
+                    {{ form.extension_status }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.internal_units_status.id_for_label }}">حالة الوحدات الداخلية:</label>
+                    {{ form.internal_units_status }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.air_ducts_status.id_for_label }}">حالة مجاري الهواء (الدكت):</label>
+                    {{ form.air_ducts_status }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.external_units_status.id_for_label }}">حالة الوحدات الخارجية والجريلات:</label>
+                    {{ form.external_units_status }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.operation_status.id_for_label }}">حالة التشغيل:</label>
+                    {{ form.operation_status }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.completion_status.id_for_label }}">حالة الإكمال:</label>
+                    {{ form.completion_status }}
+                </div>
+            </div>
+        </div>
+
+        <!-- زر الحفظ -->
+        <button type="submit" class="btn btn-primary">حفظ المشروع</button>
+        <a href="{% url 'project_list' %}" class="btn btn-secondary">إلغاء</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<h2>قائمة المهندسين</h2>
+<a href="{% url 'add_engineer' %}" class="btn btn-primary mb-3">إضافة مهندس جديد</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>اسم المهندس</th>
+            <th>التخصص</th>
+            <th>الهاتف</th>
+            <th>البريد الإلكتروني</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for engineer in engineers %}
+        <tr>
+            <td>{{ engineer.user.username }}</td>  <!-- استخدام engineer.user.username لعرض اسم المهندس -->
+            <td>{{ engineer.specialty }}</td>
+            <td>{{ engineer.phone }}</td>
+            <td>{{ engineer.email }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

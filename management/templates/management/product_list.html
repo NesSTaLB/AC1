@@ -1,0 +1,26 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<h2>قائمة المنتجات</h2>
+<a href="{% url 'add_product' %}" class="btn btn-primary mb-3">إضافة منتج جديد</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>اسم المنتج</th>
+            <th>الوصف</th>
+            <th>السعر</th>
+            <th>الكمية</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

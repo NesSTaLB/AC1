@@ -1,0 +1,28 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<h2>قائمة عروض الأسعار</h2>
+<a href="{% url 'add_quotation' %}" class="btn btn-primary mb-3">إضافة عرض سعر جديد</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>العميل</th>
+            <th>المهندس</th>
+            <th>المنتج</th>
+            <th>التاريخ</th>
+            <th>المبلغ الإجمالي</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for quotation in quotations %}
+        <tr>
+            <td>{{ quotation.customer.name }}</td>
+            <td>{{ quotation.engineer.name }}</td>
+            <td>{{ quotation.product.name }}</td>
+            <td>{{ quotation.date }}</td>
+            <td>{{ quotation.total_amount }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

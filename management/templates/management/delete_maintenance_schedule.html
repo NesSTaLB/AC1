@@ -1,0 +1,13 @@
+{% extends 'management/base.html' %}
+
+{% block title %}حذف جدول الصيانة{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">حذف جدول الصيانة</h1>
+<p>هل أنت متأكد من أنك تريد حذف جدول الصيانة "{{ schedule.task }}"؟</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">نعم، احذف</button>
+    <a href="{% url 'maintenance_schedule_list' %}" class="btn btn-secondary">إلغاء</a>
+</form>
+{% endblock %}

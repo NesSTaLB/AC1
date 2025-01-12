@@ -1,0 +1,187 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="home-page">
+    <h1 class="text-center mb-4">مرحبًا بك في نظام إدارة التكييف</h1>
+    <p class="text-center lead">يمكنك إدارة العملاء، المهندسين، الفنيين، المنتجات، المشاريع، عروض الأسعار، مهام الصيانة، الموارد، والتقارير من هنا.</p>
+
+    {% if user.is_authenticated %}
+        <div class="alert alert-success text-center" role="alert">
+            <i class="fas fa-check-circle"></i> أنت مسجل الدخول كـ <strong>{{ user.username }}</strong>.
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            <i class="fas fa-exclamation-circle"></i> يرجى <a href="{% url 'login' %}" class="alert-link">تسجيل الدخول</a> للوصول إلى جميع الميزات.
+        </div>
+    {% endif %}
+
+    <div class="row mt-5">
+        <!-- بطاقة العملاء -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-users icon"></i> العملاء
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إدارة بيانات العملاء وعرض تفاصيلهم.</p>
+                    <a href="{% url 'customer_list' %}" class="btn btn-primary">عرض العملاء</a>
+                    <a href="{% url 'add_customer' %}" class="btn btn-success mt-2">إضافة عميل</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة المهندسين -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-user-tie icon"></i> المهندسين
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إدارة بيانات المهندسين وعرض تفاصيلهم.</p>
+                    <a href="{% url 'engineer_list' %}" class="btn btn-primary">عرض المهندسين</a>
+                    <a href="{% url 'add_engineer' %}" class="btn btn-success mt-2">إضافة مهندس</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة الفنيين -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-user-cog icon"></i> الفنيين
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إدارة بيانات الفنيين وعرض تفاصيلهم.</p>
+                    <a href="{% url 'technician_list' %}" class="btn btn-primary">عرض الفنيين</a>
+                    <a href="{% url 'add_technician' %}" class="btn btn-success mt-2">إضافة فني</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة المنتجات -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-boxes icon"></i> المنتجات
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إدارة المنتجات وعرض تفاصيلها.</p>
+                    <a href="{% url 'product_list' %}" class="btn btn-primary">عرض المنتجات</a>
+                    <a href="{% url 'add_product' %}" class="btn btn-success mt-2">إضافة منتج</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة المشاريع -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-project-diagram icon"></i> المشاريع
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إدارة المشاريع وعرض تفاصيلها.</p>
+                    <a href="{% url 'project_list' %}" class="btn btn-primary">عرض المشاريع</a>
+                    <a href="{% url 'add_project' %}" class="btn btn-success mt-2">إضافة مشروع</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة عروض الأسعار -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-file-invoice-dollar icon"></i> عروض الأسعار
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إدارة عروض الأسعار وعرض تفاصيلها.</p>
+                    <a href="{% url 'quotation_list' %}" class="btn btn-primary">عرض عروض الأسعار</a>
+                    <a href="{% url 'add_quotation' %}" class="btn btn-success mt-2">إضافة عرض سعر</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة مهام الصيانة -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-tools icon"></i> مهام الصيانة
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إدارة مهام الصيانة وعرض تفاصيلها.</p>
+                    <a href="{% url 'maintenance_task_list' %}" class="btn btn-primary">عرض مهام الصيانة</a>
+                    <a href="{% url 'add_maintenance_task' %}" class="btn btn-success mt-2">إضافة مهمة صيانة</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة الموارد -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-box icon"></i> الموارد
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إدارة الموارد وعرض تفاصيلها.</p>
+                    <a href="{% url 'resource_list' %}" class="btn btn-primary">عرض الموارد</a>
+                    <a href="{% url 'add_resource' %}" class="btn btn-success mt-2">إضافة مورد</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة التقارير -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-chart-line icon"></i> التقارير
+                </div>
+                <div class="card-body">
+                    <p class="card-text">إنشاء وعرض التقارير المخصصة.</p>
+                    <a href="{% url 'report_list' %}" class="btn btn-primary">عرض التقارير</a>
+                    <a href="{% url 'create_report' %}" class="btn btn-success mt-2">إنشاء تقرير</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- أنماط إضافية -->
+<style>
+    .home-page {
+        padding: 20px;
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .card-header {
+        border-radius: 10px 10px 0 0;
+    }
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    .shadow {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .alert {
+        margin: 20px auto;
+        max-width: 600px;
+    }
+</style>
+{% endblock %}

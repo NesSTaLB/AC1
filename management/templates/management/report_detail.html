@@ -1,0 +1,19 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">تفاصيل التقرير: {{ report.name }}</h1>
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-info-circle"></i> معلومات التقرير
+        </div>
+        <div class="card-body">
+            <p><strong>تم الإنشاء بواسطة:</strong> {{ report.created_by.username }}</p>
+            <p><strong>تاريخ الإنشاء:</strong> {{ report.created_at }}</p>
+            <p><strong>صيغة التصدير:</strong> {{ report.get_export_format_display }}</p>
+            <p><strong>الفلاتر:</strong> {{ report.filters }}</p>
+        </div>
+    </div>
+    <a href="{% url 'report_list' %}" class="btn btn-secondary mt-3">العودة إلى قائمة التقارير</a>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'management/base.html' %}
+
+{% block title %}تعديل جدول الصيانة{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">تعديل جدول الصيانة</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-warning">تحديث</button>
+    <a href="{% url 'maintenance_schedule_list' %}" class="btn btn-secondary">إلغاء</a>
+</form>
+{% endblock %}
